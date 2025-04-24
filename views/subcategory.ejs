@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Form</title>
+
+    <style>
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            width: 500px;
+            background-color: rgb(16, 211, 9);
+            margin-left: 300px;
+            margin-top: 100px;
+            line-height: 30px;
+            gap: 50px;
+        }
+        h1{
+            padding-bottom: 50px;
+        }
+        #catt{
+            font-size: 1.1rem;
+        }
+        #category{
+            width: 250px;
+        }
+        #prdt{
+            font-size: 1.1rem;
+        }
+        #product{
+            width: 250px;
+        }
+        #pr{
+            font-size: 1.1rem;
+        }
+        #price{
+            width: 250px;
+        }
+        button{
+            height: 40px;
+            width: 100px;
+            border: none;
+        }
+
+    </style>
+    
+</head>
+<body>
+
+    <% if(success){ %>
+       <script> alert("<%= success %>")</script>
+        <% } %>
+
+
+    <!-- Header को Flex Container के बाहर रखें -->
+    <header>
+        <%- include('header') %>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="sidebar">
+                <%- include('sidebar') %>
+            </div>
+
+            <div class="form-container" >
+                <form action="/admin/sub-cat" method="post">
+                    <div>
+                        <h1>Add Sub Category</h1>
+                    <label for="category" id="catt">Select Category:</label>
+                    <select name="category" id="category">
+                        <option value="Select Category">Select Category</option>
+                        <% cate.forEach((cat)=>{ %>
+                            <option value="<%= cat.category %>"><%= cat.category %></option>
+                        <% }) %>
+                    </select>
+                    </div>
+                    <div>
+                        <label for="product" id="prdt">Add Product:</label>
+                    <input type="text" id="product" name="product" placeholder="Enter product name" required>
+                    </div>
+                    <div>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

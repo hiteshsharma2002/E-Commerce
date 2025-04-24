@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+        select, input {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 14px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <% if(success){ %>
+        <script>alert("<%= success %>")</script>
+    <% } %>
+
+    <%- include('header')  %>
+    <%- include('sidebar')  %>
+    
+    
+    <form action="/admin/insert-product" method="post" enctype="multipart/form-data">
+        <h1>Insert Product</h1>
+
+        <select name="category">
+            <option value="">Select Category</option>
+            <% cate.forEach((item)=>{ %>
+                <option value="<%= item.category %>"><%= item.category %></option>
+            <% }) %>
+        </select>
+
+        <select name="subcategory">
+            <option value="">Select Sub Category</option>
+            <% data.forEach((dat)=>{ %>
+                <option value="<%= dat.product %>"><%= dat.product %></option>
+            <% }) %>
+        </select>
+
+        <input type="text" name="product" placeholder="Product" >
+        <input type="number" name="price" placeholder="Price" >
+        <input type="text" name="discount" placeholder="Discount" >
+        <input type="text" name="desc" placeholder="Description" >
+
+        <select name="avail">
+            <option value="">Availability</option>
+            <option value="In Stock">In Stock</option>
+            <option value="Out Of Stock">Out Of Stock</option>
+        </select>
+
+        Add Images: <input type="file" name="image" accept="image/*" multiple required>
+
+        <button type="submit">Insert</button>
+    </form>
+
+</body>
+</html>

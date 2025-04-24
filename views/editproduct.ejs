@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin-top: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <%- include('header') %>
+    <%- include('sidebar') %>
+    
+    <form action="/admin/editt/<%= product.id %>" method="post" >
+        <h1>Edit Product</h1>
+
+        Category: 
+        <select name="category">
+            <option value="select category">Select Category</option>
+            <% cate.forEach((item)=>{ %>
+                <option value="<%= item.category %>" <%= item.category === product.category ? "selected" : "" %>><%= item.category %></option>
+            <% }) %>
+        </select>
+
+        Sub Category: 
+        <select name="subcategory">
+            <option value="select sub category">Select Sub Category</option>
+            <% data.forEach((item)=>{ %>
+                <option value="<%= item.product %>" <%= item.product === product.subcategory ? "selected" : "" %>><%= item.product %></option>
+            <% }) %>
+        </select>
+
+        Product Name: <input type="text" name="product" value="<%= product.product  %>">
+
+        Price: <input type="number" name="price" value="<%= product.price  %>">
+
+        Discount: <input type="text" name="discount" value="<%= product.discount %>">
+
+        Description: <input type="text" name="desc" value="<%= product.desc  %>">
+
+        Availability: 
+        <select name="avail">
+            <option value="select availability">Select Availability</option>
+            <option value="In Stock" <%= product.avail === 'In Stock' ? "selected" : "" %>>In Stock</option>
+            <option value="Out Of Stock" <%= product.avail === 'Out Of Stock' ? "selected" : "" %>>Out Of Stock</option>
+        </select>
+
+        <% if(product.image && product.image.length>0){ %>
+            <% product.image.forEach((img,index)=>{ %>
+                <img src="<%= img  %>" alt="vehicle image" width="300px" style="margin-top: 40px; margin-bottom: 40px;">
+
+                <button style="height: 50px; width: 100px; margin-right: 20px; background-color: #d3e016; color: white; border: none; text-decoration: none;"><a href="/admin/edit-image/<%= product._id  %>/<%= index  %>">Edit</a></button>
+
+                <button style="height: 50px; width: 100px; margin-right: 20px; background-color: #0ff7f7; color: white; border: none; text-decoration: none;"><a href="/admin/delete-image/<%= product._id %>/<%= index  %>">Delete</a></button>
+
+            <% }) %>
+            <% }else{ %>
+                <p>No image available</p>
+            <% } %>
+
+        <input type="submit" value="Save Changes">
+    </form>
+
+</body>
+</html>
