@@ -38,10 +38,15 @@ app.use(
 
 // ------------------------------------------ mongoose connect
 
-mongoose
-  .connect("mongodb://localhost:27017/ECommerce")
-  .then(() => console.log("MongoDb Connected"))
-  .catch(() => console.log("Error occured while connecting with mongodb"));
+// mongoose
+//   .connect("mongodb://localhost:27017/ECommerce")
+//   .then(() => console.log("MongoDb Connected"))
+//   .catch(() => console.log("Error occured while connecting with mongodb"));
+
+
+mongoose.connect("mongodb+srv://hiteshs1506:hitesh@cluster0.ywgpl.mongodb.net")
+  .then(() => console.log("MongoDb connected"))
+  .catch(() => console.log("Cannot be connected"));
 
 app.use((req, res, next) => {
   const userEmail = req.session.userEmail;
