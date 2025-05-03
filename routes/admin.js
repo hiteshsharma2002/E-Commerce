@@ -8,6 +8,8 @@ const subcatmong = require("../models/Mongo_subcat");
 const productmong = require("../models/Mongo_product");
 const slidemong = require('../models/Mongo_Slides');
 const reviewmong = require('../models/Mongo_review');
+const ordermong = require('../models/Mongo_Order');
+const usermong = require('../models/Mongo_user');
 
 // ----------------------------------------- admin login
 
@@ -107,20 +109,20 @@ router.post("/category", upload.single("image"), async (req, res) => {
 
 // ----------------------------------------- manage category
 
-// router.get("/manage-category", async (req, res) => {
-//   try {
-//     const data = await catmong.find();
-//     const { email } = req.session.adminEmail;
+router.get("/manage-category", async (req, res) => {
+  try {
+    const data = await catmong.find();
+    const { email } = req.session.adminEmail;
 
-//     res.render("manageCategory", { data, email });
-//   } catch (err) {
-//     res.send("error occured");
-//   }
-// });
+    res.render("manageCategory", { data, email });
+  } catch (err) {
+    res.send("error occured");
+  }
+});
 
 // ----------------------------------------- manage category
 
-router.get("/manage-category", async (req, res) => {
+router.get("/manage-categoryapi", async (req, res) => {
   try {
     const data = await catmong.find();
   
@@ -128,7 +130,6 @@ router.get("/manage-category", async (req, res) => {
 
     // res.render("manageCategory", { data, email });
     res.json(data);
-    // res.json(updatedimg);
   } catch (err) {
     // res.send("error occured");
     res.json('error')
@@ -541,6 +542,72 @@ router.get('/review-details',async (req,res) => {
     res.json(err);
   }
 })
+
+// ------------------------------------------ orders
+
+router.post('/orders', async (req, res) => {
+  
+  const email = req.email;
+  
+  try {
+
+    const { item, price,name,street,city,state,zip ,status} = req.body;
+
+    const newOrder = new ordermong({
+      item, price, street, name, city, state, zip,status,email
+    })
+
+    const saveOrder = await newOrder.save();
+    res.json({ message: 'Order placed successfully' });
+
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+
+})
+
+// -------------------------------------------- manage order
+
+router.get('/manage-order',async (req,res) => {
+  
+  try {
+    const manage = await ordermong.find();
+
+    res.render('manageOrder', { manage });
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+
+})
+
+// ------------------------------------- update order status
+
+router.post('/update-status/:id',async (req,res) => {
+  try {
+    const { status } = req.body;
+
+    await ordermong.findByIdAndUpdate(req.params.id, { status });
+
+    res.redirect('/admin/manage-order');
+  }
+  catch (err) {
+    console.log(err.message);
+  }
+})
+
+
+router.get('/my-order', async (req, res) => {
+  try {
+    const email = req.email;
+    const orders = await ordermong.find({ email });
+    
+      res.json(orders);
+  } catch (err) {
+      res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 // ------------------------------------------ sign out
