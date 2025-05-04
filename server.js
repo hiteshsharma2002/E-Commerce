@@ -19,7 +19,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
 
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.REACT_APP_BASE_URL,
   credentials: true
 }));
 
