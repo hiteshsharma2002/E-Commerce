@@ -26,6 +26,7 @@ app.use(cors({
 app.set("views", path.join(__dirname, "views"));
 
 // ------------------------------------------------- session
+app.set('trust proxy', 1)
 
 app.use(
     session({
