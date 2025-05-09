@@ -228,7 +228,7 @@ router1.get('/user-logout', function (req, res) {
 
 // razorpay -----------------------------------------
 
-router1.post('/create-order',async (req,res) => {
+router1.post('/create-order', async (req, res) => {
   
   const { total } = req.body;
 

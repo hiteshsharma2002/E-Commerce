@@ -42,6 +42,21 @@ app.use(
     })
   );
 
+// app.use(
+//     session({
+//       secret: "hitesh2822", // Replace with a secure, randomly generated key
+//       resave: false,
+//       saveUninitialized: true,
+//       cookie: { 
+//         secure: false,
+//         maxAge: 24 * 60 * 60 * 1000,
+//         httpOnly: true
+//       }, // Set `secure: true` only if using HTTPS
+//     })
+//   );
+  
+
+
 // ------------------------------------------ mongoose connect
 
 // mongoose
